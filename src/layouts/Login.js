@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import Setting from "./Setting";
+import { Link } from "react-router-dom";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -51,6 +52,12 @@ const ColorButton = withStyles((theme) => ({
     },
     width: "100%",
     margin: theme.spacing(1),
+    "& a": {
+      textDecoration: "none",
+      color: "#fff",
+      display: "block",
+      width: "100%",
+    },
   },
 }))(Button);
 
@@ -157,7 +164,7 @@ function Login() {
             忘记密码？
           </a>
           <ColorButton variant="contained" color="primary">
-            登录
+            <Link to="/">登录</Link>
           </ColorButton>
           <ColorOutlineButton variant="outlined" color="primary">
             注册

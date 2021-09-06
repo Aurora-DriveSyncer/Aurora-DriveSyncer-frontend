@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import FolderIcon from "@material-ui/icons/Folder";
-import InsertDriveFileOutlinedIcon from "@material-ui/icons/InsertDriveFileOutlined";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
-import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import SyncIcon from "@material-ui/icons/Sync";
 import SyncProblemIcon from "@material-ui/icons/SyncProblem";
-import DoneIcon from "@material-ui/icons/Done";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const useStyles = makeStyles((theme) => ({

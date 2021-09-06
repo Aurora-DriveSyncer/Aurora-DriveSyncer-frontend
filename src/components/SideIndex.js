@@ -6,7 +6,6 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import FolderIcon from "@material-ui/icons/Folder";
 import Typography from "@material-ui/core/Typography";
-const data = {};
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {

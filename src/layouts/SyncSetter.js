@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  alpha,
-  ThemeProvider,
-  withStyles,
-  makeStyles,
-  createTheme,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // import TextField from "@material-ui/core/TextField";
 import UploadingTask from "../components/UploadingTask";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { ColorButton, BootstrapInput, ColorOutlineButton } from "./Login";
+import { BootstrapInput, ColorOutlineButton } from "./Login";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadFileButton: {
     // width: "auto",
-    margin: 0,
-    marginTop: "24px",
+    margin: "0 !important",
+    marginTop: "24px !important",
   },
   fileInput: {
     position: "absolute",
