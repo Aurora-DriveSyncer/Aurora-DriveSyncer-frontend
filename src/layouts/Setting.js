@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { BootstrapInput, ColorOutlineButton } from "./Login";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
+import service from "../utils/axios";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -54,6 +55,44 @@ const useStyles = makeStyles((theme) => ({
 
 function Setting() {
   const classes = useStyles();
+  const [settings, setSettings] = useState({
+    filePassword: "",
+    localPath: "",
+    password: "",
+    url: "",
+    username: "",
+  });
+
+  useEffect(() => {
+    service
+      .get("/api/config")
+      .then((res) => {
+        setSettings(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      });
+  }, []);
+
+  function handleTextChange(event) {
+    setSettings({ ...settings, [event.target.id]: event.target.value });
+  }
+
+  function handleFilePathChange(event) {
+    console.log(event.target.files[0]);
+  }
+
+  function handleSubmit() {
+    service
+      .put("/api/config", settings)
+      .then((res) => {
+        alert(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      });
+  }
+  console.log(settings);
   return (
     <>
       <h2 className={classes.title}>
@@ -64,50 +103,66 @@ function Setting() {
         <FormControl className={classes.form}>
           <InputLabel
             shrink={true}
-            htmlFor="remote-url"
+            htmlFor="url"
             classes={{
               focused: classes.label,
             }}
           >
             远程URL
           </InputLabel>
-          <BootstrapInput id="remote-url" />
+          <BootstrapInput
+            id="url"
+            onChange={handleTextChange}
+            value={settings.url}
+          />
         </FormControl>
         <FormControl className={classes.form}>
           <InputLabel
             shrink={true}
-            htmlFor="local-path"
+            htmlFor="localPath"
             classes={{
               focused: classes.label,
             }}
           >
             本地文件夹
           </InputLabel>
-          {/* <BootstrapInput id="local-path" /> */}
-          <ColorOutlineButton
+          <BootstrapInput
+            id="localPath"
+            onChange={handleTextChange}
+            value={settings.localPath}
+          />
+          {/* <ColorOutlineButton
             variant="outlined"
             className={classes.uploadFileButton}
           >
             选择本地文件夹路径
-            <input type="file" className={classes.fileInput} />
+            <input
+              type="file"
+              className={classes.fileInput}
+              onChange={handleFilePathChange}
+            />
           </ColorOutlineButton>
-          <span>/MaterialUI/design/button</span>
+          <span>/MaterialUI/design/button</span> */}
         </FormControl>
         <FormControl className={classes.form}>
           <InputLabel
             shrink={true}
-            htmlFor="remote-username"
+            htmlFor="username"
             classes={{
               focused: classes.label,
             }}
           >
             远程用户名
           </InputLabel>
-          <BootstrapInput id="remote-username" />
+          <BootstrapInput
+            id="username"
+            onChange={handleTextChange}
+            value={settings.username}
+          />
         </FormControl>
         <FormControl className={classes.form}>
           <InputLabel
-            htmlFor="remote-password"
+            htmlFor="password"
             shrink={true}
             classes={{
               focused: classes.label,
@@ -115,12 +170,35 @@ function Setting() {
           >
             远程密码
           </InputLabel>
-          <BootstrapInput type="password" id="remote-password" />
+          <BootstrapInput
+            type="password"
+            id="password"
+            onChange={handleTextChange}
+            value={settings.password}
+          />
+        </FormControl>
+        <FormControl className={classes.form}>
+          <InputLabel
+            htmlFor="filePassword"
+            shrink={true}
+            classes={{
+              focused: classes.label,
+            }}
+          >
+            文件加密密码
+          </InputLabel>
+          <BootstrapInput
+            type="password"
+            id="filePassword"
+            onChange={handleTextChange}
+            value={settings.filePassword}
+          />
         </FormControl>
         <ColorOutlineButton
           variant="outlined"
           color="primary"
           className={classes.button}
+          onClick={handleSubmit}
         >
           保存
         </ColorOutlineButton>
