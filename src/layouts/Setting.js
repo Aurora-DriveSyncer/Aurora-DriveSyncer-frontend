@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { BootstrapInput, ColorOutlineButton } from "./Login";
+import { BootstrapInput, ColorOutlineButton, ColorButton } from "./Login";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
@@ -65,7 +65,7 @@ function Setting() {
 
   useEffect(() => {
     service
-      .get("/api/config")
+      .get("/api/config/")
       .then((res) => {
         setSettings(res.data);
       })
@@ -84,7 +84,7 @@ function Setting() {
 
   function handleSubmit() {
     service
-      .put("/api/config", settings)
+      .put("/api/config/", settings)
       .then((res) => {
         alert(res.data);
       })
@@ -194,14 +194,14 @@ function Setting() {
             value={settings.filePassword}
           />
         </FormControl>
-        <ColorOutlineButton
+        <ColorButton
           variant="outlined"
           color="primary"
           className={classes.button}
           onClick={handleSubmit}
         >
           保存
-        </ColorOutlineButton>
+        </ColorButton>
       </form>
     </>
   );

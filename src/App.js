@@ -32,7 +32,9 @@ function App() {
             </WithHeader>
           </Route>
           <Route path="/login">
-            <Login />
+            <WithHeader>
+              <Login />
+            </WithHeader>
           </Route>
         </Switch>
       </Router>

@@ -35,7 +35,7 @@ function SyncSetter() {
   const [tasks, setTasks] = useState([]);
   useEffect(() => {
     service
-      .get("/api/syncing")
+      .get("/api/syncing/")
       .then((res) => {
         const data = res.data;
         const temp = [];

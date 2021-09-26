@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputBase from "@material-ui/core/InputBase";
 import FormControl from "@material-ui/core/FormControl";
@@ -7,6 +7,9 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import Setting from "./Setting";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../utils/axios";
+import service from "../utils/axios";
+import RestoreIcon from "@material-ui/icons/Restore";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -101,11 +104,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-end",
   },
   loginSection: {
+    // boxSizing: "border-box",
+    // width: "50%",
+    // height: "98vh",
+    // padding: "10%",
+    // margin: "1vh 0",
     boxSizing: "border-box",
     width: "50%",
-    height: "98vh",
-    padding: "10%",
-    margin: "1vh 0",
+    padding: "5% ",
     borderRight: "1px #eee solid",
   },
   link: {
@@ -119,19 +125,46 @@ const useStyles = makeStyles((theme) => ({
     // flexDirection: "column",
     // justifyContent: "center",
     // padding: "0 5% ",
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "left",
+    alignItems: "flex-start",
     boxSizing: "border-box",
     width: "50%",
     padding: "5% ",
+  },
+  title: {
+    display: "flex",
+    alignItems: "center",
+    fontWeight: 400,
+    padding: "20px",
+    paddingLeft: "5px",
+  },
+  icon: {
+    margin: "10px",
+    marginLeft: 0,
   },
 }));
 
 function Login() {
   const classes = useStyles();
+  const [restorePath, setRestorePath] = useState("");
+
+  function handleRestorePathChange(event) {
+    setRestorePath(event.target.value);
+  }
+
+  function handleRestore() {
+    service.get("/api/restore/?path=" + restorePath).catch((err) => {
+      alert(err);
+    });
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.loginSection}>
-        <div className={classes.titleWrapper}>
-          <img src="http://localhost:9091/logo.png" alt="logo" />
+        <Setting />
+        {/* <div className={classes.titleWrapper}>
+          <img src={logoUrl} alt="logo" />
           <h1>Aurora</h1>
         </div>
 
@@ -169,10 +202,39 @@ function Login() {
           <ColorOutlineButton variant="outlined" color="primary">
             注册
           </ColorOutlineButton>
-        </form>
+        </form> */}
       </div>
       <div className={classes.settingSection}>
-        <Setting />
+        {/* <Setting /> */}
+        <h2 className={classes.title}>
+          <RestoreIcon className={classes.icon} />
+          <span>还原</span>
+        </h2>
+        <form className={classes.root} noValidate>
+          <FormControl className={classes.form}>
+            <InputLabel
+              shrink={true}
+              htmlFor="restore-path"
+              classes={{
+                focused: classes.label,
+              }}
+            >
+              还原路径
+            </InputLabel>
+            <BootstrapInput
+              id="restore-path"
+              onChange={handleRestorePathChange}
+            />
+          </FormControl>
+
+          <ColorButton
+            variant="contained"
+            color="primary"
+            onClick={handleRestore}
+          >
+            恢复
+          </ColorButton>
+        </form>
       </div>
     </div>
   );

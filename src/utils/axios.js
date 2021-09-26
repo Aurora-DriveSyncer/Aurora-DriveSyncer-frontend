@@ -13,3 +13,4 @@ const service = axios.create({
   xsrfHeaderName: "X-CSRFToken",
 });
 export default service;
+export { baseUrl };

@@ -52,7 +52,7 @@ function NavBar() {
     >
       <Toolbar>
         <img
-          src="http://localhost:9091/logo.png"
+          src="https://raw.githubusercontent.com/Aurora-DriveSyncer/Aurora-DriveSyncer/master/img/logo.png"
           alt=""
           className={classes.logo}
         />

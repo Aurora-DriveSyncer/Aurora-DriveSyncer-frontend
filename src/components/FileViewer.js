@@ -30,7 +30,7 @@ function FileViewer() {
   const [files, setFiles] = useState([]);
   useEffect(() => {
     service
-      .get("/api/list")
+      .get("/api/list/")
       .then((res) => {
         const data = res.data;
         const temp = [];
