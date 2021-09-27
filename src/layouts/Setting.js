@@ -63,13 +63,14 @@ function Setting() {
     url: "",
     username: "",
   });
-  const { setLocalPath } = useContext(SettingContext);
+  const { setLocalPath, setInnerPath } = useContext(SettingContext);
 
   useEffect(() => {
     service
       .get("/api/config/")
       .then((res) => {
         setSettings(res.data);
+        setLocalPath(res.data.localPath);
       })
       .catch((err) => {
         alert(err.toString());
@@ -86,11 +87,12 @@ function Setting() {
 
   function handleSubmit() {
     setLocalPath(settings.localPath);
-    sessionStorage.setItem("localPath", settings.localPath);
-    sessionStorage.setItem("filePassword", settings.filePassword);
-    sessionStorage.setItem("password", settings.password);
-    sessionStorage.setItem("url", settings.url);
-    sessionStorage.setItem("username", settings.username);
+    setInnerPath("");
+    // sessionStorage.setItem("localPath", settings.localPath);
+    // sessionStorage.setItem("filePassword", settings.filePassword);
+    // sessionStorage.setItem("password", settings.password);
+    // sessionStorage.setItem("url", settings.url);
+    // sessionStorage.setItem("username", settings.username);
     service.put("/api/config/", settings).catch((err) => {
       alert(err.toString());
     });

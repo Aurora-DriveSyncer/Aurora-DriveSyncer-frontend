@@ -25,13 +25,9 @@ function WithHeader(props) {
 const SettingContext = createContext();
 
 function App() {
-  const [localPath, setLocalPath] = useState(
-    sessionStorage.getItem("localPath") || ""
-  );
+  const [localPath, setLocalPath] = useState("");
   const [innerPath, setInnerPath] = useState("");
-  const [curFolder, setCurFolder] = useState(
-    sessionStorage.getItem("localPath") || ""
-  );
+  const [curFolder, setCurFolder] = useState("");
 
   function SetRoute({ children, ...rest }) {
     return (
@@ -47,7 +43,7 @@ function App() {
       ></Route>
     );
   }
-
+  console.log(localPath);
   return (
     <div id="wrapper">
       <SettingContext.Provider

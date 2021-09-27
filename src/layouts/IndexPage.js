@@ -24,7 +24,7 @@ function IndexPage() {
   return (
     <div id="content">
       <div id="side-index">
-        <SideIndex curPathData={curPathData} />
+        <SideIndex />
       </div>
       <div id="file-viewer">
         <div id="file-path">

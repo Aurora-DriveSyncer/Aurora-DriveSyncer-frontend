@@ -83,9 +83,6 @@ function StyledTreeItem(props) {
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
           </Typography>
-          {/* <Typography variant="caption" color="inherit">
-            {labelInfo}
-          </Typography> */}
         </div>
       }
       style={{
@@ -107,11 +104,10 @@ function StyledTreeItem(props) {
 
 function FolderItem(props) {
   const [childrenFolder, setChildrenFolder] = useState([]);
-  const { setInnerPath } = useContext(SettingContext);
-  const [expandedArr, setExpandedArr] = useState(props.expandedArr);
+  const { setInnerPath, localPath } = useContext(SettingContext);
   useEffect(() => {
     const url =
-      props.path === "."
+      props.path === localPath
         ? "/api/list/?path="
         : "/api/list/?path=" + props.path + "/";
     service
@@ -131,7 +127,7 @@ function FolderItem(props) {
   }, [props.path]);
 
   function handleClick() {
-    if (props.path !== ".") setInnerPath(props.path);
+    if (props.path !== localPath) setInnerPath(props.path);
   }
 
   return (
@@ -177,11 +173,9 @@ function SideIndex(props) {
   const { localPath, innerPath } = useContext(SettingContext);
   const [expanded, setExpanded] = useState([]);
   useEffect(() => {
-    const parts = innerPath.split("/");
-    const temp = [];
-    if (parts) {
-      temp.push(".");
-    }
+    console.log("innerPath = " + innerPath);
+    const parts = innerPath ? innerPath.split("/") : [];
+    const temp = [localPath];
     parts.reduce((prev, cur, index) => {
       temp.push(prev + cur);
       return prev + cur + "/";
@@ -197,7 +191,7 @@ function SideIndex(props) {
       expanded={expanded}
     >
       <FolderItem
-        nodeId="."
+        nodeId={localPath}
         folderName={localPath}
         path={localPath}
         expanded={expanded}
