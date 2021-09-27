@@ -71,6 +71,7 @@ function Setting() {
       .then((res) => {
         setSettings(res.data);
         setLocalPath(res.data.localPath);
+        sessionStorage.setItem("localPath", res.data.localPath);
       })
       .catch((err) => {
         alert(err.toString());
@@ -88,7 +89,7 @@ function Setting() {
   function handleSubmit() {
     setLocalPath(settings.localPath);
     setInnerPath("");
-    // sessionStorage.setItem("localPath", settings.localPath);
+    sessionStorage.setItem("localPath", settings.localPath);
     // sessionStorage.setItem("filePassword", settings.filePassword);
     // sessionStorage.setItem("password", settings.password);
     // sessionStorage.setItem("url", settings.url);

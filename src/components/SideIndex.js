@@ -128,6 +128,7 @@ function FolderItem(props) {
 
   function handleClick() {
     if (props.path !== localPath) setInnerPath(props.path);
+    else setInnerPath("");
   }
 
   return (
@@ -174,6 +175,7 @@ function SideIndex(props) {
   const [expanded, setExpanded] = useState([]);
   useEffect(() => {
     console.log("innerPath = " + innerPath);
+    console.log("localPath = " + localPath);
     const parts = innerPath ? innerPath.split("/") : [];
     const temp = [localPath];
     parts.reduce((prev, cur, index) => {
@@ -197,49 +199,6 @@ function SideIndex(props) {
         expanded={expanded}
         setExpanded={setExpanded}
       />
-      {/* <StyledTreeItem
-        nodeId="1"
-        labelText="."
-        labelIcon={FolderIcon}
-        // style={selected === "." ? classes.selected : classes.unselected}
-        // bgColor={"#e6f4ea"}
-      /> */}
-      {/* <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={FolderIcon} />
-      <StyledTreeItem nodeId="3" labelText="Categories" labelIcon={FolderIcon}>
-        <StyledTreeItem
-          nodeId="5"
-          labelText="Social"
-          labelIcon={FolderIcon}
-          labelInfo="90"
-          color="#3c8039"
-          bgColor="#e6f4ea"
-        />
-        <StyledTreeItem
-          nodeId="6"
-          labelText="Updates"
-          labelIcon={FolderIcon}
-          labelInfo="2,294"
-          color="#3c8039"
-          bgColor="#e6f4ea"
-        ></StyledTreeItem>
-        <StyledTreeItem
-          nodeId="7"
-          labelText="Forums"
-          labelIcon={FolderIcon}
-          labelInfo="3,566"
-          color="#3c8039"
-          bgColor="#e6f4ea"
-        />
-        <StyledTreeItem
-          nodeId="8"
-          labelText="Promotions"
-          labelIcon={FolderIcon}
-          labelInfo="733"
-          color="#3c8039"
-          bgColor="#e6f4ea"
-        />
-      </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={FolderIcon} /> */}
     </TreeView>
   );
 }

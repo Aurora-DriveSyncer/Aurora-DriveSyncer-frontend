@@ -25,7 +25,11 @@ function WithHeader(props) {
 const SettingContext = createContext();
 
 function App() {
-  const [localPath, setLocalPath] = useState("");
+  const [localPath, setLocalPath] = useState(
+    sessionStorage.getItem("localPath")
+      ? sessionStorage.getItem("localPath")
+      : ""
+  );
   const [innerPath, setInnerPath] = useState("");
   const [curFolder, setCurFolder] = useState("");
 
@@ -34,7 +38,7 @@ function App() {
       <Route
         {...rest}
         render={({ location }) => {
-          if (localPath.length) {
+          if (localPath) {
             return children;
           } else {
             return (
@@ -65,16 +69,16 @@ function App() {
                 <Login />
               </WithHeader>
             </Route>
-            <SetRoute path="/upload-manage">
+            <Route path="/upload-manage">
               <WithHeader>
                 <SyncSetter />
               </WithHeader>
-            </SetRoute>
-            <SetRoute path="/file-viewer">
+            </Route>
+            <Route path="/file-viewer">
               <WithHeader>
                 <IndexPage />
               </WithHeader>
-            </SetRoute>
+            </Route>
           </Switch>
         </Router>
       </SettingContext.Provider>

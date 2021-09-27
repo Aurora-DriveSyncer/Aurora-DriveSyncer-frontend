@@ -59,24 +59,6 @@ function SyncSetter() {
     <div className={classes.wrapper}>
       <h3 className={classes.title}>上传管理</h3>
       {tasks}
-      {/* <UploadingTask
-        filename="file"
-        filesize="200KB"
-        filepath="/Material-ui/component/progress"
-        filestatus="syncing"
-      />
-      <UploadingTask
-        filename="filefilefilefile"
-        filesize="200KB"
-        filepath="/Material-ui/component/progress"
-        filestatus="syncing"
-      />
-      <UploadingTask
-        filename="file03"
-        filesize="20000MB"
-        filepath="/Material-ui/progress"
-        filestatus="waiting"
-      /> */}
     </div>
   );
 }

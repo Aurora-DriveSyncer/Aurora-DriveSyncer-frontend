@@ -36,7 +36,7 @@ function PathViewer() {
     }, "");
     setLinks(temp);
     console.log(temp);
-  }, []);
+  }, [innerPath]);
   function handleClick(path) {
     return function () {
       setInnerPath(path);
