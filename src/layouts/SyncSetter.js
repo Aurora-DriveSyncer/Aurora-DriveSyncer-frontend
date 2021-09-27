@@ -54,7 +54,7 @@ function SyncSetter() {
       .catch((err) => {
         alert(err.toString());
       });
-  });
+  }, []);
   return (
     <div className={classes.wrapper}>
       <h3 className={classes.title}>上传管理</h3>

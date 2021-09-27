@@ -169,22 +169,20 @@ const useStyles = makeStyles({
   unselected: {},
 });
 
-function SideIndex(props) {
+function SideIndex() {
   const classes = useStyles();
   const { localPath, innerPath } = useContext(SettingContext);
   const [expanded, setExpanded] = useState([]);
   useEffect(() => {
-    console.log("innerPath = " + innerPath);
-    console.log("localPath = " + localPath);
     const parts = innerPath ? innerPath.split("/") : [];
-    const temp = [localPath];
+    const temp = [];
+    if (localPath) temp.push(localPath);
     parts.reduce((prev, cur, index) => {
       temp.push(prev + cur);
       return prev + cur + "/";
     }, "");
     setExpanded(temp);
   }, [innerPath]);
-  console.log(expanded);
   return (
     <TreeView
       className={classes.root}
@@ -192,13 +190,15 @@ function SideIndex(props) {
       defaultExpandIcon={<ChevronRightIcon />}
       expanded={expanded}
     >
-      <FolderItem
-        nodeId={localPath}
-        folderName={localPath}
-        path={localPath}
-        expanded={expanded}
-        setExpanded={setExpanded}
-      />
+      {localPath ? (
+        <FolderItem
+          nodeId={localPath}
+          folderName={localPath}
+          path={localPath}
+          expanded={expanded}
+          setExpanded={setExpanded}
+        />
+      ) : null}
     </TreeView>
   );
 }

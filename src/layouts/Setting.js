@@ -82,10 +82,6 @@ function Setting() {
     setSettings({ ...settings, [event.target.id]: event.target.value });
   }
 
-  function handleFilePathChange(event) {
-    console.log(event.target.files[0]);
-  }
-
   function handleSubmit() {
     setLocalPath(settings.localPath);
     setInnerPath("");

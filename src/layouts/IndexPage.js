@@ -9,7 +9,7 @@ function IndexPage() {
   const { localPath, innerPath } = useContext(SettingContext);
   const [curPathData, setCurPathData] = useState([]);
   useEffect(() => {
-    if (localPath.length) {
+    if (localPath) {
       const url = "/api/list/?path=" + (innerPath ? innerPath + "/" : "");
       service
         .get(url)

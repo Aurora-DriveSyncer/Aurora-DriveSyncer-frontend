@@ -13,11 +13,6 @@ const usePathStyle = makeStyles((theme) => ({
   },
 }));
 
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
-
 function PathViewer() {
   const classes = usePathStyle();
   const { innerPath, setInnerPath } = useContext(SettingContext);
@@ -25,7 +20,6 @@ function PathViewer() {
   useEffect(() => {
     const temp = [];
     const parts = innerPath.split("/");
-    console.log("pathviewer - " + parts);
     // const parts = "a/b/c/".split("/");
     parts.reduce((prev, cur, index) => {
       temp.push({
@@ -35,7 +29,6 @@ function PathViewer() {
       return prev + cur + "/";
     }, "");
     setLinks(temp);
-    console.log(temp);
   }, [innerPath]);
   function handleClick(path) {
     return function () {

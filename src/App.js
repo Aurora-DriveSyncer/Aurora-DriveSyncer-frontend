@@ -26,7 +26,7 @@ const SettingContext = createContext();
 
 function App() {
   const [localPath, setLocalPath] = useState(
-    sessionStorage.getItem("localPath")
+    sessionStorage.getItem("localPath") !== "null"
       ? sessionStorage.getItem("localPath")
       : ""
   );
@@ -49,7 +49,6 @@ function App() {
       ></Route>
     );
   }
-  console.log(localPath);
   return (
     <div id="wrapper">
       <SettingContext.Provider
