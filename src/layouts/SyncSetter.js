@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 function SyncSetter() {
   const classes = useStyles();
   const [tasks, setTasks] = useState([]);
-  useEffect(() => {
+
+  function update() {
     service
       .get("/api/syncing/")
       .then((res) => {
@@ -54,6 +55,31 @@ function SyncSetter() {
       .catch((err) => {
         alert(err.toString());
       });
+  }
+  useEffect(() => {
+    setInterval(() => {
+      update();
+    }, 500);
+    // service
+    //   .get("/api/syncing/")
+    //   .then((res) => {
+    //     const data = res.data;
+    //     const temp = [];
+    //     data.forEach((task) => {
+    //       temp.push(
+    //         <UploadingTask
+    //           filename={task.filename}
+    //           filesize={task.size}
+    //           filepath={task.path}
+    //           filestatus={task.status}
+    //         />
+    //       );
+    //     });
+    //     setTasks(temp);
+    //   })
+    //   .catch((err) => {
+    //     alert(err.toString());
+    //   });
   }, []);
   return (
     <div className={classes.wrapper}>
