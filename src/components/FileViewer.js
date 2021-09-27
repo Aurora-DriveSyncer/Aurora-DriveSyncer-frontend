@@ -15,6 +15,7 @@ function FileViewer(props) {
           type={file.directory ? "folder" : "file"}
           filename={file.filename}
           status={file.status}
+          path={file.fullPath}
         />
       );
     });

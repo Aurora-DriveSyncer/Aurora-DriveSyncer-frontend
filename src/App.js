@@ -37,7 +37,9 @@ function App() {
           if (localPath.length) {
             return children;
           } else {
-            return <Redirect to={{ pathname: "/" }} />;
+            return (
+              <Redirect to={{ pathname: "/", state: { from: location } }} />
+            );
           }
         }}
       ></Route>

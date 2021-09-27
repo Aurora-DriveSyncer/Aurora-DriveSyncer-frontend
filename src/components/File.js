@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import FolderIcon from "@material-ui/icons/Folder";
@@ -6,6 +6,8 @@ import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import SyncIcon from "@material-ui/icons/Sync";
 import SyncProblemIcon from "@material-ui/icons/SyncProblem";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import service from "../utils/axios";
+import { SettingContext } from "../App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,10 +65,14 @@ const useStyles = makeStyles((theme) => ({
   errIcon: {
     color: "red",
   },
+  a: {
+    display: "block",
+  },
 }));
 
 function File(props) {
   const classes = useStyles();
+  const { innerPath, setInnerPath } = useContext(SettingContext);
   const [icon, setIcon] = useState(<FolderIcon className={classes.fileIcon} />);
   const [statusIcon, setStatusIcon] = useState(
     <SyncIcon className={classes.statusIcon} />
@@ -104,12 +110,39 @@ function File(props) {
         break;
     }
   }, [props.type]);
+
+  function handleDbClick() {
+    if (props.type === "folder") {
+      setInnerPath(props.path);
+    }
+  }
+
   return (
-    <Paper className={classes.root} elevation={0}>
+    <Paper className={classes.root} elevation={0} onDoubleClick={handleDbClick}>
       <div className={classes.wrapper}>
-        {icon}
-        {statusIcon}
-        <p className={classes.fileName}>{props.filename}</p>
+        {props.type === "file" ? (
+          <a
+            href={
+              "http://localhost:9091/api/download/?path=" +
+              (innerPath ? innerPath + "/" : "") +
+              props.filename +
+              "/"
+            }
+            download={props.filename}
+            target="_blank"
+            className={classes.a}
+          >
+            {icon}
+            {statusIcon}
+            <p className={classes.fileName}>{props.filename}</p>
+          </a>
+        ) : (
+          <>
+            {icon}
+            {statusIcon}
+            <p className={classes.fileName}>{props.filename}</p>
+          </>
+        )}
       </div>
     </Paper>
   );

@@ -29,11 +29,13 @@ function PathViewer() {
     // const parts = "a/b/c/".split("/");
     parts.reduce((prev, cur, index) => {
       temp.push({
-        path: prev + cur + "/",
+        path: prev + cur,
         name: cur,
       });
+      return prev + cur + "/";
     }, "");
     setLinks(temp);
+    console.log(temp);
   }, []);
   function handleClick(path) {
     return function () {
@@ -43,7 +45,18 @@ function PathViewer() {
   return (
     <Breadcrumbs aria-label="breadcrumb">
       {links.map((link, index) => {
-        return <Typography color="textPrimary">{link.name}</Typography>;
+        if (index === links.length - 1) {
+          return <Typography color="textPrimary">{link.name}</Typography>;
+        }
+        return (
+          <Link
+            onClick={handleClick}
+            className={classes.link}
+            onClick={handleClick(link.path)}
+          >
+            {link.name}
+          </Link>
+        );
       })}
     </Breadcrumbs>
   );
