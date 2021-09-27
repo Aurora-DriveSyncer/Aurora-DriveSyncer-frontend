@@ -163,49 +163,8 @@ function Login() {
     <div className={classes.wrapper}>
       <div className={classes.loginSection}>
         <Setting />
-        {/* <div className={classes.titleWrapper}>
-          <img src={logoUrl} alt="logo" />
-          <h1>Aurora</h1>
-        </div>
-
-        <form className={classes.root} noValidate>
-          <FormControl className={classes.form}>
-            <InputLabel
-              shrink={true}
-              htmlFor="username"
-              classes={{
-                focused: classes.label,
-              }}
-            >
-              用户名
-            </InputLabel>
-            <BootstrapInput placeholder="用户名" id="username" />
-          </FormControl>
-          <FormControl className={classes.form}>
-            <InputLabel
-              htmlFor="password"
-              shrink={true}
-              classes={{
-                focused: classes.label,
-              }}
-            >
-              密码
-            </InputLabel>
-            <BootstrapInput type="password" id="password" />
-          </FormControl>
-          <a href="#!" className={classes.link}>
-            忘记密码？
-          </a>
-          <ColorButton variant="contained" color="primary">
-            <Link to="/">登录</Link>
-          </ColorButton>
-          <ColorOutlineButton variant="outlined" color="primary">
-            注册
-          </ColorOutlineButton>
-        </form> */}
       </div>
       <div className={classes.settingSection}>
-        {/* <Setting /> */}
         <h2 className={classes.title}>
           <RestoreIcon className={classes.icon} />
           <span>还原</span>

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { BootstrapInput, ColorOutlineButton, ColorButton } from "./Login";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import service from "../utils/axios";
+import { SettingContext } from "../App";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -62,6 +63,7 @@ function Setting() {
     url: "",
     username: "",
   });
+  const { setLocalPath } = useContext(SettingContext);
 
   useEffect(() => {
     service
@@ -83,16 +85,16 @@ function Setting() {
   }
 
   function handleSubmit() {
-    service
-      .put("/api/config/", settings)
-      .then((res) => {
-        alert(res.data);
-      })
-      .catch((err) => {
-        alert(err.toString());
-      });
+    setLocalPath(settings.localPath);
+    sessionStorage.setItem("localPath", settings.localPath);
+    sessionStorage.setItem("filePassword", settings.filePassword);
+    sessionStorage.setItem("password", settings.password);
+    sessionStorage.setItem("url", settings.url);
+    sessionStorage.setItem("username", settings.username);
+    service.put("/api/config/", settings).catch((err) => {
+      alert(err.toString());
+    });
   }
-  console.log(settings);
   return (
     <>
       <h2 className={classes.title}>

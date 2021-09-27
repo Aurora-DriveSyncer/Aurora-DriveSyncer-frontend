@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   const classes = useStyles();
+
   return (
     <AppBar
       position="static"
@@ -63,14 +64,14 @@ function NavBar() {
         >
           Aurora
         </Typography>
-        <Button component={Link} to="/">
+        <Button component={Link} to="/file-viewer">
           目录
         </Button>
         <Button component={Link} to="/upload-manage">
           上传管理
         </Button>
-        <Button component={Link} to="/login">
-          登录
+        <Button component={Link} to="/">
+          设置
           <AccountCircleTwoToneIcon className={classes.userIcon} />
         </Button>
       </Toolbar>

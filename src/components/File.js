@@ -73,14 +73,14 @@ function File(props) {
   );
   useEffect(() => {
     switch (props.status) {
-      case "done":
+      case "Synced":
         setStatusIcon(
           <CheckCircleIcon
             className={classes.statusIcon + " " + classes.doneIcon}
           />
         );
         break;
-      case "sync":
+      case "Waiting":
         setStatusIcon(
           <SyncIcon className={classes.statusIcon + " " + classes.syncIcon} />
         );

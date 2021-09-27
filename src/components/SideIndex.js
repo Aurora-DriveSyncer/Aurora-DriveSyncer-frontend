@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -6,6 +6,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import FolderIcon from "@material-ui/icons/Folder";
 import Typography from "@material-ui/core/Typography";
+import { SettingContext } from "../App";
+import service from "../utils/axios";
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
@@ -103,6 +105,60 @@ function StyledTreeItem(props) {
   );
 }
 
+function FolderItem(props) {
+  const [childrenFolder, setChildrenFolder] = useState([]);
+  const { setInnerPath } = useContext(SettingContext);
+  const [expandedArr, setExpandedArr] = useState(props.expandedArr);
+  useEffect(() => {
+    const url =
+      props.path === "."
+        ? "/api/list/?path="
+        : "/api/list/?path=" + props.path + "/";
+    service
+      .get(url)
+      .then((res) => {
+        const temp = [];
+        res.data.map((file) => {
+          if (file.directory) {
+            temp.push(file);
+          }
+        });
+        setChildrenFolder(temp);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, [props.path]);
+
+  function handleClick() {
+    if (props.path !== ".") setInnerPath(props.path);
+  }
+
+  return (
+    <StyledTreeItem
+      nodeId={props.nodeId}
+      labelText={props.folderName}
+      labelIcon={FolderIcon}
+      title={props.path}
+      color="#3c8039"
+      bgColor="#e6f4ea"
+      onClick={handleClick}
+    >
+      {childrenFolder.map((folder, index) => {
+        return (
+          <FolderItem
+            nodeId={folder.fullPath}
+            folderName={folder.filename}
+            path={folder.fullPath}
+            expanded={props.expanded}
+            setExpanded={props.setExpanded}
+          />
+        );
+      })}
+    </StyledTreeItem>
+  );
+}
+
 const useStyles = makeStyles({
   root: {
     height: 240,
@@ -110,18 +166,51 @@ const useStyles = makeStyles({
     maxWidth: 300,
     margin: "10px",
   },
+  selected: {
+    backgroundColor: "#e6f4ea",
+  },
+  unselected: {},
 });
 
-function SideIndex() {
+function SideIndex(props) {
   const classes = useStyles();
+  const { localPath, innerPath } = useContext(SettingContext);
+  const [expanded, setExpanded] = useState([]);
+  useEffect(() => {
+    const parts = innerPath.split("/");
+    const temp = [];
+    if (parts) {
+      temp.push(".");
+    }
+    parts.reduce((prev, cur, index) => {
+      temp.push(prev + cur);
+      return prev + cur + "/";
+    }, "");
+    setExpanded(temp);
+  }, [innerPath]);
+  console.log(expanded);
   return (
     <TreeView
       className={classes.root}
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
+      expanded={expanded}
     >
-      <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={FolderIcon} />
-      <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={FolderIcon} />
+      <FolderItem
+        nodeId="."
+        folderName={localPath}
+        path={localPath}
+        expanded={expanded}
+        setExpanded={setExpanded}
+      />
+      {/* <StyledTreeItem
+        nodeId="1"
+        labelText="."
+        labelIcon={FolderIcon}
+        // style={selected === "." ? classes.selected : classes.unselected}
+        // bgColor={"#e6f4ea"}
+      /> */}
+      {/* <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={FolderIcon} />
       <StyledTreeItem nodeId="3" labelText="Categories" labelIcon={FolderIcon}>
         <StyledTreeItem
           nodeId="5"
@@ -138,7 +227,7 @@ function SideIndex() {
           labelInfo="2,294"
           color="#3c8039"
           bgColor="#e6f4ea"
-        />
+        ></StyledTreeItem>
         <StyledTreeItem
           nodeId="7"
           labelText="Forums"
@@ -156,7 +245,7 @@ function SideIndex() {
           bgColor="#e6f4ea"
         />
       </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={FolderIcon} />
+      <StyledTreeItem nodeId="4" labelText="History" labelIcon={FolderIcon} /> */}
     </TreeView>
   );
 }

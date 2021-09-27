@@ -23,6 +23,7 @@
   margin: 10px 0;
   /* background-color: lightgray; */
   border-right: 1px lightgray solid;
+  overflow-y: auto;
 }
 
 #file-viewer {
